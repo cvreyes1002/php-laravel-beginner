@@ -13,11 +13,11 @@ class ExampleController extends Controller
         return view('homepage', ['allAnimals' => $animals, 'name' => $ourName, 'catname' => 'Meowsalot']);
 
 #        return '<h1>Homepage</h1><a href="/about">View the about page.</a>';
-
     }
 
     public function aboutPage() {
-        return '<h1>About page</h1><a href="/">View the Homepage.</a>';
-
+        return view('single-post');
+        
+#        return '<h1>About page</h1><a href="/">View the Homepage.</a>';
     }
 }
