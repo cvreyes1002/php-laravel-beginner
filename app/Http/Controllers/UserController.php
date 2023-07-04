@@ -26,8 +26,9 @@ class UserController extends Controller
         
         $incomingFields['password'] = bcrypt($incomingFields['password']);
 
-        User::create($incomingFields);
-        return 'Hello from register function.';
+        $user = User::create($incomingFields);
+        auth()->login($user);
+        return redirect('/')->with('success', 'Account created.');
     }
 
     public function login(Request $request) {
@@ -38,9 +39,14 @@ class UserController extends Controller
 
         if (auth()->attempt(['username' => $incomingFields['loginusername'], 'password' => $incomingFields['loginpassword']])) {
             $request->session()->regenerate();
-            return 'Success!';
+            return redirect('/')->with('success', 'You are now logged in.');
         } else {
-            return 'Failed!';
+            return redirect('/')->with('failure', 'Invalid login.');
         }
+    }
+
+    public function logout() {
+        auth()->logout();
+        return redirect('/')->with('success', 'You are now logged out.');
     }
 }
